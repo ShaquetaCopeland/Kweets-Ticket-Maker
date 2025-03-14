@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kweets Ticket Maker</title>
+    <style>
+        body {
+            font-family: 'Georgia', serif;
+            text-align: center;
+            background-color: #d6e8d5;
+            padding: 20px;
+        }
+        .form-container {
+            max-width: 700px;
+            margin: auto;
+            background: white;
+            padding: 20px;
+            border-radius: 15px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            border: 3px solid #4CAF50;
+        }
+        h1 {
+            color: #4CAF50;
+            position: relative;
+        }
+        h1::before, h1::after {
+            content: '\1F33C'; /* Flower emoji */
+            margin: 0 10px;
+        }
+        select, input, textarea {
+            width: 100%;
+            padding: 8px;
+            margin-top: 10px;
+            border-radius: 10px;
+            border: 1px solid #4CAF50;
+        }
+        .btn-submit, .btn-copy, .btn-reset {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            font-size: 16px;
+            margin-top: 10px;
+        }
+        .footer {
+            margin-top: 20px;
+            font-size: 14px;
+            font-family: 'Georgia', serif;
+        }
+        #summary {
+            background: #f0f8ff;
+            padding: 10px;
+            border-radius: 10px;
+            margin-top: 20px;
+            text-align: left;
+            white-space: pre-wrap;
+        }
+    </style>
+</head>
+<body>
+    <div class="form-container">
+        <h1>Kweets Ticket Maker</h1>
+        <form id="ticketForm">
+            <label for="type">Type:</label>
+            <select id="type">
+                <option value="Open">Open</option>
+                <option value="Solved">Solved</option>
+                <option value="IIRS">IIRS</option>
+                <option value="Pending">Pending</option>
+                <option value="CAR">CAR</option>
+                <option value="Hold">Hold</option>
+            </select><br><br>
+
+            <label for="ticketNumber">Ticket Number:</label>
+            <input type="text" id="ticketNumber"><br><br>
+
+            <label for="clientName">Client Name:</label>
+            <input type="text" id="clientName"><br><br>
+
+            <label for="email">Email:</label>
+            <input type="email" id="email"><br><br>
+
+            <label for="sku">SKU(s) Information:</label>
+            <textarea id="sku" placeholder="Enter SKU(s), each on a new line"></textarea><br><br>
+
+            <label for="skuDetails">Enter Details (one per SKU):</label>
+            <textarea id="skuDetails" placeholder="Enter details corresponding to each SKU"></textarea><br><br>
+
+            <label for="issue">Issue:</label>
+            <textarea id="issue"></textarea><br><br>
+
+            <label for="nextSteps">Next Steps:</label>
+            <textarea id="nextSteps"></textarea><br><br>
+
+            <label for="tier">Tier:</label>
+            <select id="tier">
+                <option value="VIP">VIP</option>
+                <option value="Influencer">Influencer</option>
+                <option value="Trendsetter">Trendsetter</option>
+                <option value="Tastemaker">Tastemaker</option>
+            </select><br><br>
+
+            <label for="description">Description:</label>
+            <textarea id="description"></textarea><br><br>
+
+            <label for="itemId">Item ID:</label>
+            <input type="text" id="itemId"><br><br>
+
+            <label for="consignmentId">Consignment ID:</label>
+            <input type="text" id="consignmentId"><br><br>
+
+            <label for="location">Location:</label>
+            <select id="location">
+                <option value="Perth Amboy">Perth Amboy</option>
+                <option value="Phoenix">Phoenix</option>
+                <option value="Secacus">Secacus</option>
+                <option value="Sold">Sold</option>
+                <option value="Returned">Returned</option>
+            </select><br><br>
+
+            <label for="status">Status:</label>
+            <input type="text" id="status"><br><br>
+
+            <button type="button" class="btn-submit" onclick="generateSummary()">Generate Summary</button>
+            <button type="reset" class="btn-reset">Reset Form</button>
+        </form>
+
+        <div id="summary"></div>
+        <button class="btn-copy" onclick="copySummary()">Copy Summary</button>
+        <div class="footer">Made by Kweet</div>
+    </div>
+
+    <script>
+        function generateSummary() {
+            const type = document.getElementById('type').value;
+            const ticketNumber = document.getElementById('ticketNumber').value;
+            const clientName = document.getElementById('clientName').value;
+            const email = document.getElementById('email').value;
+            const skus = document.getElementById('sku').value.split('\n');
+            const details = document.getElementById('skuDetails').value.split('\n');
+            const issue = document.getElementById('issue').value;
+            const nextSteps = document.getElementById('nextSteps').value;
+            const tier = document.getElementById('tier').value;
+            const description = document.getElementById('description').value;
+            const itemId = document.getElementById('itemId').value;
+            const consignmentId = document.getElementById('consignmentId').value;
+            const location = document.getElementById('location').value;
+            const status = document.getElementById('status').value;
+
+            let summary = `Type: ${type}\nTicket Number: ${ticketNumber}\nClient Name: ${clientName}\nEmail: ${email}\n`;
+
+            for (let i = 0; i < skus.length; i++) {
+                if (skus[i].trim() !== "") {
+                    summary += `SKU: ${skus[i]} - Details: ${details[i] || "N/A"}\n`;
+                }
+            }
+
+            summary += `Issue: ${issue}\nNext Steps: ${nextSteps}\nTier: ${tier}\nDescription: ${description}\nItem ID: ${itemId}\nConsignment ID: ${consignmentId}\nLocation: ${location}\nStatus: ${status}`;
+
+            document.getElementById('summary').innerText = summary;
+        }
+
+        function
